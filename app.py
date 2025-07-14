@@ -5,6 +5,11 @@ import uuid
 import tabula
 import subprocess
 import tempfile
+from PIL import Image
+import io
+
+
+
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
 
@@ -23,6 +28,8 @@ def file_convert():
         return convert_excel_file(file, file_type)
     elif file_extension.endswith('.pdf'):
         return convert_pdf_file(file, file_type)
+    elif file_extension.endswith('.webp') or file_extension.endswith('.jpg') or file_extension.endswith('.png'):
+        return convert_image(file, file_type)
     else:
         return "Unsupported file type. Please upload a CSV, Excel, or PDF file."
 
@@ -100,8 +107,19 @@ def file_pandoc():
     output_path = os.path.join(DOWNLOAD_FOLDER, output_filename)
     return redirect(url_for('download_file', filename=output_filename))
 
+def convert_image(file, target_format):
     
-
+    img = Image.open(file.stream)
+    
+    output_filename = f"{uuid.uuid4()}.{target_format}"
+    output_path = os.path.join('downloads', output_filename)
+    
+    img.save(output_path, format=target_format.upper())
+    return render_template('downloads.html', file_name=output_filename)
+    
+@app.route('/image', methods=['POST', 'GET'])
+def image_convert():
+    return render_template('image.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

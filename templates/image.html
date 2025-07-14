@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}File Converter{% endblock %}
+
+{% block content %}
+<!-- Main Content -->
+<div class="container py-5">
+    <div class="text-center mb-4">
+        <h1>File Converter</h1>
+        <p class="text-muted">Convert your files, lightning fast. 100% secure.</p>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="border rounded-3 p-5 text-center bg-light" style="border: 2px dashed #ddd;">
+                <div class="mb-3">
+                    <!-- Icons -->
+                    <i class="bi bi-file-earmark-text fs-1 mx-2"></i>
+                    <i class="bi bi-file-earmark-ppt fs-1 mx-2"></i>
+                    <i class="bi bi-file-earmark-excel fs-1 mx-2"></i>
+                    <i class="bi bi-folder fs-1 mx-2"></i>
+                </div>
+                <h4>Drop your file here or</h4>
+
+                <form action="{{ url_for('file_convert') }}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" accept=".png,.jpg,.jpeg,.gif,.bmp,.webp" class="form-control mb-3">
+                    <select name="filetype" class="form-select mb-3 w-50 mx-auto">
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPG</option>
+                        <option value="WebP">WebP</option>
+                    </select>
+
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        Select File to Convert
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center mt-5">
+                <h5>Other Conversions</h5>
+                <div class="row row-cols-2 row-cols-md-4 g-3 mt-3">
+                    <div class="col"><button class="btn btn-outline-danger w-100">PDF to Word</button></div>
+                    <div class="col"><button class="btn btn-outline-success w-100">Excel to CSV</button></div>
+                    <div class="col"><button class="btn btn-outline-warning w-100">JPG to PNG</button></div>
+                    <div class="col"><button class="btn btn-outline-secondary w-100">TXT to PDF</button></div>
+                    <div class="col"><button class="btn btn-outline-primary w-100">Word to PDF</button></div>
+                    <div class="col"><button class="btn btn-outline-success w-100">CSV to Excel</button></div>
+                    <div class="col"><button class="btn btn-outline-danger w-100">PNG to JPG</button></div>
+                    <div class="col"><button class="btn btn-outline-secondary w-100">PDF to TXT</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
