@@ -82,30 +82,30 @@ def file_converter_home():
 
 
 
-@app.route('/file-pandoc', methods=['POST'])
-def file_pandoc():
+# @app.route('/file-pandoc', methods=['POST'])
+# def file_pandoc():
     
-    DOWNLOAD_FOLDER = 'downloads'
+#     DOWNLOAD_FOLDER = 'downloads'
     
-    file = request.files.get('file')
-    target_format = request.form.get('filetype')
-    filename = file.filename
-    upload_path = os.path.join('uploads', filename)
-    file.save(upload_path)
+#     file = request.files.get('file')
+#     target_format = request.form.get('filetype')
+#     filename = file.filename
+#     upload_path = os.path.join('uploads', filename)
+#     file.save(upload_path)
     
-    tmp_fd, tmp_output = tempfile.mkstemp(suffix=f'.{target_format}')
-    os.close(tmp_fd)
+#     tmp_fd, tmp_output = tempfile.mkstemp(suffix=f'.{target_format}')
+#     os.close(tmp_fd)
     
-    try:
-        subprocess.run(
-            ['pandoc', upload_path, '-o', tmp_output], check=True
-        )
-    except subprocess.CalledProcessError as e:
-        return f"Error converting file: {e}"
+#     try:
+#         subprocess.run(
+#             ['pandoc', upload_path, '-o', tmp_output], check=True
+#         )
+#     except subprocess.CalledProcessError as e:
+#         return f"Error converting file: {e}"
     
-    output_filename = f"converted.{target_format}"
-    output_path = os.path.join(DOWNLOAD_FOLDER, output_filename)
-    return redirect(url_for('download_file', filename=output_filename))
+#     output_filename = f"converted.{target_format}"
+#     output_path = os.path.join(DOWNLOAD_FOLDER, output_filename)
+#     return redirect(url_for('download_file', filename=output_filename))
 
 def convert_image(file, target_format):
     
